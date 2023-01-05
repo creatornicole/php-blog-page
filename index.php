@@ -42,7 +42,7 @@
         }
 
         .menubar {
-            background-color: rgba(192,48,48, 0.7);
+            background-color: rgba(192,48,48, 0.9);
             text-align: right;
             padding: 20px;
             padding-right: 0;
@@ -58,6 +58,37 @@
         .menubar a:hover {
             background-color: rgba(192,48,48,0.2);
         }
+
+        form {
+            background-color: white;
+            border-radius: 3px;
+            width: 400px;
+            padding: 30px 130px;
+            margin: 35px auto;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        button[type='submit'] {
+            font-family: 'Poppins', sans-serif;
+            background-color: rgba(192,48,48,0.9);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            width: 100px;
+            padding: 7px;
+        }
+
+        button[type='submit']:hover {
+            background-color: rgba(192,48,48,1);
+            cursor: pointer;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -79,6 +110,31 @@
     <div class="menubar">
         <a href="index.php?page=articles">Articles</a>
         <a href="index.php?page=add">Add Articles</a>
+    </div>
+
+    <!-- Content -->
+    <div>
+        <?php
+            //display content according to page
+            if($_GET['page'] == 'articles') {
+
+            }
+
+            if($_GET['page'] == 'add') {
+                echo "
+                    <form action='?page=articles' method='POST'>
+                        <h2>Add New Blog Entry</h2>
+                        <label for='title'>Title</label>
+                        <input type='text' id='title' name='title' placeholder='Title...'></input>
+                    
+                        <label for='text'>Text</label>
+                        <textarea id='text' name='text' rows='10' cols='55' placeholder='Text...'></textarea>
+
+                        <button type='submit'>Upload</button>
+                    </form>
+                ";
+            }
+        ?>
     </div>
 </body>
 </html>

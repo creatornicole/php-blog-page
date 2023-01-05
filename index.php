@@ -88,6 +88,26 @@
             cursor: pointer;
         }
 
+        .entry {
+            background-color: white;
+            border-radius: 3px;
+            height: 400px;
+            width: 650px;
+            margin: 35px auto;
+        }
+
+        .entry-header {
+            background-color: rgba(192,48,48,0.9);
+            color: white;
+            border-radius: 3px 3px 0px 0px;
+            padding: 1px 25px;
+        }
+
+        .entry-text {
+            border-radius: 0px 0px 3px 3px;
+            padding: 15px 25px;
+        }
+
         
     </style>
 </head>
@@ -115,6 +135,22 @@
     <!-- Content -->
     <div>
         <?php
+            //check POST parameters
+            if(isset($_POST['title']) && isset($_POST['text'])) {
+                $title = $_POST['title'];
+                $text = $_POST['text'];
+                echo "
+                    <div class='entry'>
+                        <div class='entry-header'>
+                            <h3>$title</h3>
+                        </div>
+                        <div class='entry-text'>
+                            <p>$text</p>
+                        </div>
+                    </div>
+                ";
+            }
+
             //display content according to page
             if($_GET['page'] == 'articles') {
 

@@ -94,7 +94,7 @@
         .entry {
             background-color: white;
             border-radius: 3px;
-            height: 400px;
+            max-height: 400px;
             width: 650px;
             margin: 35px auto;
         }
@@ -111,6 +111,10 @@
             padding: 15px 25px;
         }
 
+        .missing-call-out {
+            color: red;
+        }
+
         
     </style>
 </head>
@@ -123,7 +127,7 @@
             //Change Properties if Add Entry Page is Loaded
             if($_GET['page'] == 'add') {
                 $headline = 'Add Blog Entry';
-            }
+            } 
 
             echo '<h1>' . $headline . '</h1>';
         ?>
@@ -138,28 +142,57 @@
     <!-- Content -->
     <div>
         <?php
+            $entries = [];
+
+            //check if textfile for saving blog entries already exists
+            if(file_exists('entries.txt')) {
+                //if textfile already exists, do not overwrite it
+                //instead add existing content to entries array
+
+                //get text from textfile
+                $text = file_get_contents('entries.txt', true);
+                //paste text to textfile, note: convert back to text first
+                $entries = json_decode($text, true);
+            }
+
             //check POST parameters
             if(isset($_POST['title']) && isset($_POST['text'])) {
-                $title = $_POST['title'];
-                $text = $_POST['text'];
-                echo "
-                    <div class='entry'>
-                        <div class='entry-header'>
-                            <h3>$title</h3>
-                        </div>
-                        <div class='entry-text'>
-                            <p>$text</p>
-                        </div>
-                    </div>
-                ";
-            }
+                echo '<p>New blog entry ' . $_POST['title'] . ' was added.';
+                //create table entry
+                $newEntry = [
+                    'title' => $_POST['title'],
+                    'text' => $_POST['text']
+                ];
+                //push new table entry to entries array
+                array_push($entries, $newEntry);
+                //paste entries array into textfile
+                //json_encode -> transform array into text
+                file_put_contents('entries.txt', json_encode($entries, JSON_PRETTY_PRINT));
+            } 
 
             //display content according to page
             if($_GET['page'] == 'articles') {
+                //display all existing blog entries
+                foreach($entries as $row) {
+                    $title = $row['title'];
+                    $text = $row['text'];
 
+                    echo "
+                        <div class='entry'>
+                            <div class='entry-header'>
+                                <h3>$title</h3>
+                            </div>
+                            <div class='entry-text'>
+                                <p>$text</p>
+                            </div>
+                        </div>
+                    ";
+                }
             }
 
             if($_GET['page'] == 'add') {
+                //contains form to add more entries
+                //TODO: Add Date automatically and let user choose category
                 echo "
                     <form action='?page=articles' method='POST'>
                         <h2>Add New Blog Entry</h2>

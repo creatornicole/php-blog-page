@@ -30,10 +30,13 @@
 
         .cover h1 {
             color: white;
+            font-size: 47px;
+            text-shadow: black 5px 0 10px;
             /* position cover headline in the bottom right corner */
             position: absolute;
             right: 20px;
-            bottom: 10px;
+            bottom: 0px;
+            margin-bottom: 10px;
         }
 
         .cover-pic {

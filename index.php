@@ -111,8 +111,13 @@
             padding: 15px 25px;
         }
 
-        .missing-call-out {
-            color: red;
+
+        .add-call-out {
+            color: green;
+            /* try to replicate position and behavior of entry container */
+            /* display according to entry containers */
+            width: 650px;
+            margin: 35px auto;           
         }
 
         
@@ -157,7 +162,7 @@
 
             //check POST parameters
             if(isset($_POST['title']) && isset($_POST['text'])) {
-                echo '<p>New blog entry ' . $_POST['title'] . ' was added.';
+                echo '<p class="add-call-out">New blog entry ' . $_POST['title'] . ' was added.';
                 //create table entry
                 $newEntry = [
                     'title' => $_POST['title'],
